@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: https://ecohubcontainerregistry.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_755f5774d19045239eb465425c438eac }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_293473bbd0c84752b9915e7d8ea4411f }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_84f9591b18594c30a0950fc549fad64a }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_d76f73dadfb8421f8bad3ca1fb60681b }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ecohubcontainerregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_755f5774d19045239eb465425c438eac }}/server:${{ github.sha }}
+        tags: ecohubcontainerregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_84f9591b18594c30a0950fc549fad64a }}/server:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'ecohubserver'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_f7fe8dbc78e74378aa3c648e2621a4c8 }}
-        images: 'ecohubcontainerregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_755f5774d19045239eb465425c438eac }}/server:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_6b3b2bc83c844c92942be2b3eda30435 }}
+        images: 'ecohubcontainerregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_84f9591b18594c30a0950fc549fad64a }}/server:${{ github.sha }}'
