@@ -23,12 +23,12 @@ const image_router = require("./routes/image_router");
 const cab_router = require("./routes/cab_router");
 const redisClient = require("./redis/redis");
 
-const accessLogStream = fs.createWriteStream(
-	path.join(__dirname, "log/access.log"),
-	{
-		flags: "a",
-	}
-);
+// const accessLogStream = fs.createWriteStream(
+// 	path.join(__dirname, "log/access.log"),
+// 	{
+// 		flags: "a",
+// 	}
+// );
 
 // morgan.token("id", function getId(req) {
 // 	return req.id;
