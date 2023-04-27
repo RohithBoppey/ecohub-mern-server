@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 const path = require("path");
 const uuid = require("node-uuid");
 const fs = require("fs");
@@ -30,9 +30,9 @@ const accessLogStream = fs.createWriteStream(
 	}
 );
 
-morgan.token("id", function getId(req) {
-	return req.id;
-});
+// morgan.token("id", function getId(req) {
+// 	return req.id;
+// });
 
 // create express app
 const app = express();
@@ -63,7 +63,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use(assignId);
-app.use(morgan(":id :method :url :response-time", { stream: accessLogStream }));
+// app.use(morgan(":id :method :url :response-time", { stream: accessLogStream }));
 function assignId(req, res, next) {
 	req.id = uuid.v4();
 	next();
