@@ -54,7 +54,7 @@ const options = {
 	},
 	apis: ["./server.js"], // files containing annotations as above
 };
-
+//hello this project is not working
 const swaggerSpec = swaggerJsdoc(options);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
