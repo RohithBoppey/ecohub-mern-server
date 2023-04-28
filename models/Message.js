@@ -4,7 +4,10 @@ const Schema = mongoose.Schema;
 
 const MessageSchema = new Schema({
 	email: String,
-	type: String,
+	type: {
+		type: String,
+		index: true
+	},
 	message: String,
 });
 
