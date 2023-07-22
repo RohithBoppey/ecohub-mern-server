@@ -8,6 +8,6 @@ const client = redis.createClient({
 	},
 });
 
-client.connect();
+// client.connect();
 
 module.exports = client;

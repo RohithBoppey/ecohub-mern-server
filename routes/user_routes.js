@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 dotenv.config();
 const nodemailer = require("nodemailer");
-const redisClient = require("../redis/redis");
 
 function hashpassword(password) {
 	const salt = bcrypt.genSaltSync();
@@ -31,17 +30,7 @@ const cacheKey = "all-users";
 
 user_router.get("/", async (req, res) => {
 	let users = [];
-	const cacheKey = "all-users";
-	let clients = await redisClient.get(cacheKey);
-	if (!clients) {
-		users = await User.find();
-		redisClient.set(cacheKey, JSON.stringify(users));
-		console.log("Set into Redis client");
-	} else {
-		console.log("Customers Retreived from Redis client");
-		users = clients;
-		users = JSON.parse(users);
-	}
+	users = await User.find();
 	res.json(users);
 });
 
@@ -52,7 +41,6 @@ user_router.get("/:id", async (req, res) => {
 });
 
 user_router.post("/", async (req, res) => {
-	redisClient.del(cacheKey);
 	let user = await User.find({
 		email: req.body.email,
 		// password: hashpassword(req.body.password),
@@ -141,7 +129,6 @@ user_router.put("/:id", async (req, res) => {
 });
 
 user_router.delete("/:id", async (req, res) => {
-	redisClient.del(cacheKey);
 	await User.deleteOne({ _id: req.params.id });
 	const message = "User deleted successfully";
 	console.log(message);
@@ -170,7 +157,6 @@ user_router.post("/update-profile", async (req, res) => {
 	const message = "User updated successfully";
 	console.log(message);
 	console.log(user);
-	redisClient.del(cacheKey);
 	res.json(user);
 });
 
@@ -235,7 +221,6 @@ user_router.post("/change-to-default", async (req, res) => {
 		};
 
 		sendEmail();
-		redisClient.del(cacheKey);
 		response = "Updated";
 	} else {
 		response = "Non-valid user";

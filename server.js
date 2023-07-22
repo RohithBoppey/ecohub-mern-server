@@ -21,7 +21,6 @@ const vehicle_router = require("./routes/vehicle_router");
 const allvehicle_router = require("./routes/allvehicle_router");
 const image_router = require("./routes/image_router");
 const cab_router = require("./routes/cab_router");
-const redisClient = require("./redis/redis");
 
 // const accessLogStream = fs.createWriteStream(
 // 	path.join(__dirname, "log/access.log"),
@@ -79,13 +78,6 @@ mongoose
 	)
 	.then(() => console.log("Connected to MongoDB"))
 	.catch((err) => console.error("Could not connect to MongoDB", err));
-
-app.post("/clear-redis", (req, res) => {
-	const key = req.body.key;
-	redisClient.del(key);
-	console.log("Cleared from redis");
-	res.sendStatus(200);
-});
 
 app.get('/', (req, res) => {
 	res.send('Welcome to ECOHUB Backend!')
