@@ -32,7 +32,6 @@ message_router.get("/", async (req, res) => {
 		};
 		allMessages.push(temp);
 	}
-	allMessages = JSON.parse(allMessages);
 	res.json(allMessages);
 });
 
@@ -51,24 +50,7 @@ message_router.post("/", async (req, res) => {
 		type: req.body.type,
 	});
 	await message.save();
-	const sendEmail = async () => {
-		let info = await transporter.sendMail({
-			from: '"ECOHUB Mail Service" <ecohub.mern@gmail.com>', // sender address
-			to: req.body.email, // list of receivers
-			subject: "New Request", // Subject line
-			html: `<h1>Hello User</h1>
-			<h3>
-			Hello User, We have received your request for <u>${req.body.type}</u> : ${message._id}, saying : "${message.message}" 
-			Please bear with us until one of our team contacts you.
-			<br /> Thank you and have a great day!</h3>
-			<h4>Ecohub, India</h4>`,
-		});
-
-		console.log("Message sent: %s", info.messageId);
-		res.send();
-	};
-
-	sendEmail();
+	
 	console.log("Message created and sent to Admin Portal");
 	const messageinfo = "Message created and sent to Admin Portal";
 	console.log(messageinfo);
