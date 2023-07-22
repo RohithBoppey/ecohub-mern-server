@@ -50,7 +50,7 @@ message_router.post("/", async (req, res) => {
 		type: req.body.type,
 	});
 	await message.save();
-	
+
 	console.log("Message created and sent to Admin Portal");
 	const messageinfo = "Message created and sent to Admin Portal";
 	console.log(messageinfo);
@@ -78,39 +78,8 @@ message_router.post("/reply", async (req, res) => {
 	const email = req.body.email;
 	console.log(email);
 	console.log(messagevalue);
-	let info = await transporter.sendMail({
-		from: '"ECOHUB Mail Service" <ecohub.mern@gmail.com>', // sender address
-		to: email, // list of receivers
-		subject: "Reply to your query", // Subject line
-		html: `
-		<h2>Thank you for reaching out to us!</h2>
-		<p>
-        We have received a request from you saying:
-        <span style="color: rgb(165, 122, 13)">
-            <i>
-                "${req.body.message}"
-            </i>
-        </span>
-		<br />
-		<span style="color: rgb(4, 148, 35)">
-        	<i>
-           		"${messagevalue}"
-        	</i>
-    	</span>
-    	</p>
-	    <h3>
-	    <br /> Thank you and have a great day!</h3>
-	    <h4>Ecohub, India</h4>`,
-	});
 
-	console.log("Message sent: %s", info.messageId);
-
-	if (info) {
-		await Message.deleteOne({ email: req.body.email });
-		res.send("reply sent");
-	} else {
-		res.send("reply not sent");
-	}
+	res.send("reply sent");
 });
 
 module.exports = message_router;
